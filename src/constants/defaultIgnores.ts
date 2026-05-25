@@ -1,0 +1,18 @@
+export const DEFAULT_IGNORES: string[] = [
+  '**/node_modules/**',
+  '**/.git/**',
+  '**/dist/**',
+  '**/build/**',
+  '**/out/**',
+  '**/coverage/**',
+  '**/.next/**',
+  '**/.nuxt/**',
+  '**/.cache/**',
+  '**/*.lock',
+  '**/*.log',
+  '**/*.map',
+  '**/*.min.js',
+  '**/*.min.css',
+  '**/.DS_Store',
+  '**/Thumbs.db',
+];
