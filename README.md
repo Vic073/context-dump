@@ -1,68 +1,43 @@
-ContextDump 📂➡️🤖
+# ContextDump 📂➡️🤖
 
-ContextDump is a developer CLI tool that traverses a directory, respects ignore files (.gitignore, .contextdumpignore), estimates LLM token usage using the cl100k_base tokenizer, and packages your entire codebase into structured markdown, plaintext, or JSON output.
+**ContextDump** is a developer CLI tool that traverses a directory, respects ignore files (`.gitignore`, `.contextdumpignore`), estimates LLM token usage using the `cl100k_base` (GPT-4/Claude) tokenizer, and packages the entire codebase context into a structured markdown, plaintext, or JSON format. You can copy it straight to your clipboard with a single flag.
 
-It removes the pain of manually copy-pasting files when working with AI tools like Claude, ChatGPT, or Gemini.
-
-
----
-
-Features
-
-⚡ Fast Directory Traversal
-Recursively scans projects efficiently using fast-glob.
-
-🛑 Smart Ignore Handling
-Respects .gitignore, .contextdumpignore, and additional custom ignore patterns.
-
-🧮 Token Estimation
-Estimates token usage and warns when your context approaches model limits.
-
-📋 Clipboard & File Output
-Copy dumps directly to your clipboard or save them to files.
-
-🌲 Tree-Only Mode
-Generate a clean directory structure without file contents.
-
-⚙️ Project Configuration Support
-Store reusable defaults in contextdump.config.json.
-
-
+No more tedious manual copy-pasting of source files when prompting Claude, ChatGPT, or Gemini.
 
 ---
 
-Usage
+## Features
 
-Run directly with npx:
-
-npx contextdump [directory] [options]
-
-Or clone the repository and use it locally.
-
-
----
-
-Quick Start
-
-1. Initialize configuration files:
-
-contextdump init
-
-
-2. Generate a context dump:
-
-contextdump ./src --copy --model claude
-
-
-3. Paste the generated context into your preferred AI assistant.
-
-
-
+- ⚡ **High Performance**: Recursively scans and traverses directories quickly (built using `fast-glob`).
+- 🛑 **Respects Ignores**: Integrates parent and root-level `.gitignore` rules, custom `.contextdumpignore` files, and global CLI patterns.
+- 🧮 **Token Limit Awareness**: Estimates tokens and warns you (or fails via `--hard-limit`) if your context exceeds selected model windows (Claude, GPT-4o, Gemini, etc.).
+- 📋 **Seamless Clipboard & File Writing**: Writes dumps directly to system clipboard or files, with graceful stderr summaries keeping your piping tools clean.
+- 🌲 **Tree-Only Mode**: Outputs just the directory visual structure without reading contents.
+- ⚙️ **Configurable**: Define project-wide defaults in a `contextdump.config.json` file.
 
 ---
 
-CLI Options Reference
 
+## Quick Start
+
+1. Initialize ContextDump configuration in your project root:
+   ```bash
+   contextdump init
+   ```
+   *This creates a starter `contextdump.config.json` file and a `.contextdumpignore` in your working directory.*
+
+2. Pack your directory and copy it to the clipboard:
+   ```bash
+   contextdump ./src --copy --model claude
+   ```
+
+3. Open your AI assistant (e.g. Claude) and paste (**Ctrl+V** or **Cmd+V**) the context directly!
+
+---
+
+## CLI Options Reference
+
+```text
 Usage: contextdump [directory] [options]
 
 Arguments:
@@ -83,24 +58,25 @@ Options:
   -t, --tree-only            Output file tree only, no file contents
       --max-file-size <kb>   Skip files larger than this size in KB (default: 500)
       --no-header            Suppress the metadata header block in output
-      --no-defaults          Disable built-in ignore patterns
+      --no-defaults          Disable the built-in default ignore patterns
       --ignore-file <path>   Path to an additional ignore file
       --follow-symlinks      Follow symbolic links during traversal
       --hard-limit           Exit non-zero if token count exceeds model limit
-  -v, --verbose              Show per-file token breakdown
-  -h, --help                 Display help message
+  -v, --verbose              Show per-file token breakdown in summary
+  -h, --help                 Display this help message
       --version              Display version number
 
 Subcommands:
-  contextdump init           Create starter config and ignore files
-
+  contextdump init           Create starter contextdump.config.json and .contextdumpignore
+```
 
 ---
 
-Project Configuration
+## Project Configuration
 
-Example contextdump.config.json:
+You can commit a `contextdump.config.json` to your project to enforce common rules:
 
+```json
 {
   "model": "claude",
   "include": ["ts", "tsx", "json", "md"],
@@ -111,34 +87,32 @@ Example contextdump.config.json:
   "copy": true,
   "format": "markdown"
 }
-
+```
 
 ---
 
-Local Development
+## Developer Section
 
-Requirements
+If you are developing or extending ContextDump locally:
 
-Node.js v18+
+### Prerequisites
+- Node.js v18+
 
-
-Setup
-
+### Setup
+```bash
 # Install dependencies
 npm install
 
-# Run tests
+# Run unit tests
 npm run test
 
-# Build project
+# Compile TypeScript
 npm run build
 
-# Link locally for testing
+# Link binary locally for global testing
 npm link
+```
 
+## License
 
----
-
-License
-
-ISC License — free to use and distribute.
+ISC License. Free to use and distribute.
